@@ -32,15 +32,19 @@ server
         </ServerLocation>
       </ChunkExtractorManager>,
     )
-   
+    const helmet = Helmet.renderStatic();
+
     res.send(minify(
       `<!doctype html>
-          <html lang="">
+          <html lang="" ${helmet.htmlAttributes.toString()}>
           <head>
+              ${helmet.title.toString()}
+              ${helmet.meta.toString()}
+              ${helmet.link.toString()}
               ${extractor.getLinkTags()}
               ${extractor.getStyleTags()}
           </head>
-          <body style='margin:0'>
+          <body style='margin:0' ${helmet.bodyAttributes.toString()}>
               <div id="root">${markup}</div>
               ${extractor.getScriptTags()}
           </body>
